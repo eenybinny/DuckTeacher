@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title> Dr.Duck | Web </title>
+    <!-- Tell the browser to be responsive to screen width -->    
+      <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/AdminLTE.min.css"/>
+      
+	<link rel="stylesheet" href="/css/duckteacher.css"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+
+    <body id="main">
+
+	   <div class="wrapper">
+		
+		<!-- header -->
+		<header class="main-header">
+			<a href="/super" class="logo"><span class="logo-lg"><img src="/dist/img/5logo.png" alt="DuckTeacher" /></span></a>
+			<nav class="navbar navbar-static-top" role="navigation">
+				<a href="javascript:lnbControls()" class="sidebar-toggle" role="button">
+					<span class="sr-only">Toggle navigation</span>
+				</a>
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+						<a href="/super/logout"><button type="button" class="btn btn-default btn-gray" aria-label="Center Align"><span class="glyphicon glyphicon-log-out" aria-hidden="true">&nbsp;로그아웃</span></button></a>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+		<aside class="main-sidebar">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="sidebar-menu">
+					<li class="active treeview"><a href="/super"><i class="fa fa-heart-o"></i> <span>Home</span></a></li>
+					<li class="treeview">
+						<a href="#">
+							<i class="fa fa-search"></i>
+							<span>홈페이지 관리</span>
+						</a>
+						<ul class="treeview-menu">
+							<li><a href="/super/gallery">갤러리 관리</a></li>
+							<li><a href="/super/market">마켓 관리</a></li>
+							<li><a href="/super/account">계정 관리</a></li>
+						</ul>
+					</li>
+					<li class="treeview"><a href="/super/info"><i class="fa fa-user"></i> <span>내 계정 관리</span></a></li>
+				</ul>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+			  <h1><strong>덕선생</strong><span>다섯가지 덕을 품고 날아오르다</span></h1>
+			</section>
+			<!-- Content Header (Page header) -->
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="row">
+					<div class="col-md-6 col-lg-12">
+						<!-- AREA CHART -->
+						<div class="box">
+							<div class="box-header with-border">
+								<h3 class="box-title">누적 작품 게시량</h3>
+								<div class="box-tools pull-right">
+									<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+									<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								</div>
+							</div>
+							<div class="box-body">
+								<div class="chart">
+									<canvas id="totalGallery" height="100"></canvas>
+								</div>
+							</div><!-- /.box-body -->
+						</div><!-- /.box -->
+					</div>
+                </div>
+                    
+                <div class="row">
+					<div class="col-md-6 col-lg-12">
+						<div class="box">
+							<div class="box-header with-border">
+								<h3 class="box-title">누적 제품 게시량</h3>
+								<div class="box-tools pull-right">
+									<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+									<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								</div>
+							</div>
+							<div class="box-body">
+								<div class="chart">
+									<canvas id="totalMarket" height="100"></canvas>
+								</div>
+							</div><!-- /.box-body -->
+						</div><!-- /.box -->
+					</div>
+				</div><!--row-->
+			</section><!-- /.content -->
+		</div>
+	</div>
+
+    <!-- jQuery 2.1.4 -->
+    <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <!-- ChartJS 1.0.1 -->
+    <script src="/plugins/chartjs/Chart.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="/dist/js/demo.js"></script>
+        
+    <script src="/plugins/chartjs/Chart.bundle.js"></script>
+        
+    <script src="/dist/js/common_ui.js"></script> <!-- 2016.09 add -->
+
+    <!-- page script -->
+    <script>
+      var configtotalG = {
+        type: 'line',
+        data: {
+            datasets: [{
+                borderColor: "rgba(116,165,136,1)",
+                label: "Gallery posts",
+                data: <%- galleryData%>,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            title:{
+                display:true,
+                text:"Gallery posts"
+            },
+            scales: {
+                xAxes: [{
+                    type: "time",
+                    time:{
+                        unit:'week'
+                    },
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'value'
+                    }
+                }]
+            }
+        }
+    };
+
+
+    /*Gallery End*/
+
+    var configtotalM = {
+        type: 'line',
+        data: {
+            datasets: [{
+                borderColor: "rgba(214,101,90,1)",
+                label: "Market posts",
+                data:<%-martketData%>,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            title:{
+                display:true,
+                text:"Market posts"
+            },
+            scales: {
+                xAxes: [{
+                    type: "time",
+                    time:{
+                        unit:'week'
+                    },
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'value'
+                    }
+                }]
+            }
+        }
+    };
+
+    /*Market End*/
+
+$ (function() {
+    Chart.defaults.global.tooltips.custom = function(tooltip) {
+
+        // Tooltip Element
+        var tooltipEl = $('#chartjs-tooltip');
+
+        if (!tooltipEl[0]) {
+            $('body').append('<div id="chartjs-tooltip"></div>');
+            tooltipEl = $('#chartjs-tooltip');
+        }
+
+        // Hide if no tooltip
+        if (!tooltip.opacity) {
+            tooltipEl.css({
+                opacity: 0
+            });
+            $('.chartjs-wrap canvas')
+                    .each(function(index, el) {
+                        $(el).css('cursor', 'default');
+                    });
+            return;
+        }
+
+        $(this._chart.canvas).css('cursor', 'pointer');
+
+        // Set caret Position
+        tooltipEl.removeClass('above below no-transform');
+        if (tooltip.yAlign) {
+            tooltipEl.addClass(tooltip.yAlign);
+        } else {
+            tooltipEl.addClass('no-transform');
+        }
+
+        // Set Text
+        if (tooltip.body) {
+            var innerHtml = [
+                (tooltip.beforeTitle || []).join('\n'), (tooltip.title || []).join('\n'), (tooltip.afterTitle || []).join('\n'), (tooltip.beforeBody || []).join('\n'), (tooltip.body || []).join('\n'), (tooltip.afterBody || []).join('\n'), (tooltip.beforeFooter || [])
+                        .join('\n'), (tooltip.footer || []).join('\n'), (tooltip.afterFooter || []).join('\n')
+            ];
+            tooltipEl.html(innerHtml.join('\n'));
+        }
+
+        // Find Y Location on page
+        var top = 0;
+        if (tooltip.yAlign) {
+            if (tooltip.yAlign == 'above') {
+                top = tooltip.y - tooltip.caretHeight - tooltip.caretPadding;
+            } else {
+                top = tooltip.y + tooltip.caretHeight + tooltip.caretPadding;
+            }
+        }
+
+        var position = $(this._chart.canvas)[0].getBoundingClientRect();
+
+        // Display, position, and set styles for font
+        tooltipEl.css({
+            opacity: 1,
+            width: tooltip.width ? (tooltip.width + 'px') : 'auto',
+            left: position.left + tooltip.x + 'px',
+            top: position.top + top + 'px',
+            fontFamily: tooltip._fontFamily,
+            fontSize: tooltip.fontSize,
+            fontStyle: tooltip._fontStyle,
+            padding: tooltip.yPadding + 'px ' + tooltip.xPadding + 'px',
+        });
+    };
+
+    window.onload = function() {
+
+        var ctx = document.getElementById("totalGallery").getContext("2d");
+        window.myLine1 = new Chart(ctx, configtotalG);
+
+        var ctx2 = document.getElementById("totalMarket").getContext("2d");
+        window.myLine2 = new Chart(ctx2, configtotalM);
+
+    };
+});
+    </script>
+  </body>
+</html>

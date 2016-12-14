@@ -1,0 +1,174 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>DuckTeacher</title>
+
+        <!-- Bootstrap -->
+        <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+          <style>
+      #columns{
+        column-width:350px;
+        column-gap: 15px;
+      }
+      #columns figure{
+        display: inline-block;
+        border:1px solid rgba(0,0,0,0.2);
+        margin:0;
+        margin-bottom: 15px;
+        padding:10px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.5);;
+      }
+      #columns figure img{
+        width:100%;
+      }
+      #columns figure figcaption{
+        border-top:1px solid rgba(0,0,0,0.2);
+        padding:10px;
+        margin-top:11px;
+      }
+              th{
+                  background: #779CFF;
+                  text-align: center;
+                  padding: 10px;
+              }
+              td{
+                  text-align: center;
+                  padding: 10px;
+              }
+    </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <a class="navbar-brand" href="main.html">덕선생._.</a>
+            </div>
+              
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/gallery">갤러리</a></li>
+                <li><a href="/market">마켓</a></li>
+                <li><a href="/myinfo">내정보보기</a></li>
+              </ul>
+          </div><!-- /.container-fluid -->
+        </nav>
+        
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                      <div style="margin:30px;"><h3>판매 관리</h3></div>
+
+            <!-- /.box-header -->
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>날짜</th>
+                                <th>제품명</th>
+                                <th>가격</th>
+                                <th>판매여부</th>
+                                <th>할인여부</th>
+                                <th>삭제</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <%
+                for(var i=0; i<rows.length; i++){
+                var item = rows[i];
+                    var year = item.goods_date.getFullYear();
+            var month = item.goods_date.getMonth()+1;
+            var date = item.goods_date.getDate();  
+            %> 
+                    <tr>
+                     
+                     <td>
+                      <%=year +'-' +month +'-' +date%>
+                     </td>
+                     <td>
+                     <%= item.goods_name %>
+                     </td>
+                     <td>
+                     <%= item.goods_cost %>
+                     </td>
+                     <td>
+                     <%
+                         if(item.goods_numOrder >= item.goods_order){
+                             var OKsell = '성공';
+                         }
+                         else{
+                             OKsell = '실패';
+                         }
+                         %>
+                         <%= OKsell %>
+                     </td>
+                     <td>
+                     <%
+                         if(item.goods_numOrder >= item.goods_sale){
+                             var OKsale = '성공';
+                         }
+                         else{
+                             OKsale = '실패';
+                         }
+                         %>
+                         <%= OKsale %>
+                     </td>
+                        <td>
+                            <a href="/myinfo/sell/delete/<%= item.goods_code%>"><button type="button" class="btn btn-danger">삭제</button></a>
+                        </td>
+                 </tr>
+            <% } %>
+                </tbody>
+              </table>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+        
+         
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+        <script src="/dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="/dist/js/demo.js"></script>
+    <script src="/dist/js/common_ui.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/plugins/datatables/dataTables.bootstrap.min.js"></script>
+        
+        <script>
+            $(function(){
+
+            $(".dropdown-menu li a").click(function(){
+
+              $(".btn:first-child").text($(this).text());
+              $(".btn:first-child").val($(this).text());
+
+           });
+
+        });
+            
+            $(function () {
+    $('#example1').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+        </script>
+    </body>
+</html>

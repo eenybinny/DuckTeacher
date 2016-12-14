@@ -1,0 +1,133 @@
+ <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>DuckTeacher</title>
+
+        <!-- Bootstrap -->
+        <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+          <style>
+      #columns{
+        column-width:350px;
+        column-gap: 15px;
+      }
+      #columns figure{
+        display: inline-block;
+        border:1px solid rgba(0,0,0,0.2);
+        margin:0;
+        margin-bottom: 15px;
+        padding:10px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.5);;
+      }
+      #columns figure img{
+        width:100%;
+      }
+      #columns figure figcaption{
+        border-top:1px solid rgba(0,0,0,0.2);
+        padding:10px;
+        margin-top:11px;
+      }
+                th{
+                  background: #779CFF;
+                  text-align: center;
+                  padding: 10px;
+              }
+              td{
+                  text-align: center;
+                  padding: 10px;
+              }
+    </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/main">덕선생._.</a>
+            </div>
+              
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/gallery.html">갤러리</a></li>
+                <li><a href="/market">마켓</a></li>
+                <li><a href="/myinfo">내정보보기</a></li>
+              </ul>
+          </div><!-- /.container-fluid -->
+        </nav>
+         
+        <div>
+             <img src="/images/mymsg_title.png" style="width:300px;margin-left:50px;margin-bottom:10px;">
+         </div>
+         <div style="margin:50px;">
+             <table border="1" bordercolor="gray" >
+		<colgroup>
+  		  <col style="width:10%"/>
+		  <col style="width:10%"/>
+		  <col style="width:*"/>
+		  <col style="width:5%"/>
+		  <col style="width:5%"/>
+		</colgroup>
+                 <thead>
+                    <tr>
+                     <th>
+                          <font color="#FFFFFF">날짜</font>
+                     </th>
+                     <th>
+                         <font color="#FFFFFF">보낸이</font>
+                     </th>
+                     <th>
+                          <font color="#FFFFFF">내용</font>
+                     </th>
+                     <th>
+                        <font color="#FFFFFF">답장</font>
+                     </th>
+                     <th>
+                          <font color="#FFFFFF">삭제</font>
+                     </th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                    <% rows.forEach(function (item, index){ 
+                         var year = item.message_date.getFullYear();
+                         var month = item.message_date.getMonth()+1;
+                         var date = item.message_date.getDate();
+                    %>
+                    <tr>
+                        <td><%=year + '-' + month + '-' + date%></td>
+                        <td><%= item.message_sendernick %></td>
+                        <td><%= item.message_content %></td>
+                        <td><a href="/myinfo/message/reply/<%= item.msg_index%>"><button type="button" class="btn btn-warning">답장</button></a></td>
+                        <td><a href="/myinfo/message/delete/<%= item.msg_index%>"><button type="button" class="btn btn-danger">삭제</button></a></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+             </table>
+         </div>
+         
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        
+        <script>
+            $(function(){
+
+            $(".dropdown-menu li a").click(function(){
+
+              $(".btn:first-child").text($(this).text());
+              $(".btn:first-child").val($(this).text());
+
+           });
+
+        });
+        </script>
+    </body>
+</html>

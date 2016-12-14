@@ -1,0 +1,255 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>DuckTeacher</title>
+
+        <!-- Bootstrap -->
+        <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+        <link href="/css/imagepreview.css" rel="stylesheet"/>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+       <style>
+      #columns{
+        column-width:350px;
+        column-gap: 15px;
+      }
+      #columns figure{
+        display: inline-block;
+        border:1px solid rgba(0,0,0,0.2);
+        margin:0;
+        margin-bottom: 15px;
+        padding:10px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.5);;
+      }
+      #columns figure img{
+        width:100%;
+      }
+      #columns figure figcaption{
+        border-top:1px solid rgba(0,0,0,0.2);
+        padding:10px;
+        margin-top:11px;
+      }
+    </style>
+
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <a class="navbar-brand" href="main.html">덕선생._.</a>
+            </div>
+              <form class="navbar-form navbar-left" action="/market/search/author" method="get" id="searchAction" name = "searchAction">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="작가명을 입력하세요" name="searchWord" id="searchWord">
+                </div>
+                  <button type="submit" class="btn btn-default"><a href="#" onclick="searchContent()">검색</a></button>
+              </form>
+              <form class="navbar-form navbar-left" action="/market/search/goods" method="get" id="searchAction" name = "searchAction">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="제품명을 입력하세요" name="searchWord" id="searchWord">
+                </div>
+                  <button type="submit" class="btn btn-default"><a href="#" onclick="searchContent()">검색</a></button>
+              </form>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/gallery">갤러리</a></li>
+                <li><a href="/market">마켓</a></li>
+                <li><a href="/my">내정보보기</a></li>
+              </ul>
+          </div><!-- /.container-fluid -->
+        </nav>
+        <div>
+            <img src="/images/market_banner.png" style="max-width:100%; height:auto;margin-bottom:50px;" >
+        </div>
+     
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="box box-primary">
+                      <form action="/market/upload" method="POST" enctype="multipart/form-data">
+                    <div class="box-header with-border">
+                      <img src="/images/mar_regi.png">
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div style="background:#EAEAEA; border-radius:1em;">
+                        
+                    <div style="padding:20px;">
+                     <table>
+                         <tr>
+                             <td style="font-weight:bold;">
+                                 제품명 
+                             </td>
+                         </tr>
+                        <tr>
+                             <td >
+                                 <input type="text" id="goodsName" maxlength="30" style="margin-top:10px; margin-bottom:10px;width:950px;"  placeholder="제품명을 입력하세요(30자 내)" name="goodsName" />
+                             </td>
+                         </tr>
+                         <tr>
+                             <td style="font-weight:bold;">
+                                 가격
+                             </td>
+                         </tr>
+                         <tr>
+                             <td >
+                                 <input type="text" id="goodsName" maxlength="30" style="margin-top:10px; margin-bottom:10px;width:950px;"  placeholder="가격을 입력하세요" name="goodsPrice" />
+                             </td>
+                         </tr>
+                         <tr>
+                             <td style="font-weight:bold;">
+                                 최소 주문 수
+                             </td>
+                         </tr>
+                         <tr>
+                             <td >
+                                 <input type="text" id="goodsName" maxlength="30" style="margin-top:10px; margin-bottom:10px;width:950px;"  placeholder="최소 주문 수를 입력하세요" name="goodsOrder" />
+                             </td>
+                         </tr>
+                         <tr>
+                             <td style="font-weight:bold;">
+                                 할인 적용 수
+                             </td>
+                         </tr>
+                         <tr>
+                             <td >
+                                 <input type="text" id="goodsName" maxlength="30" style="margin-top:10px; margin-bottom:10px;width:950px;"  placeholder="할인 적용 수를 입력하세요" name="goodsSale" />
+                             </td>
+                         </tr>
+                         <tr>
+                             <td style="font-weight:bold;">
+                                 제품 설명
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <textarea type="text" id="goodsContent" style="padding:10px; margin-top:10px; " maxlength=500 cols="130" rows=15 placeholder="제품 설명을 입력하세요(500자 내)" name="goodsContent"></textarea>
+                             </td>
+                         </tr>
+                         
+                         <div style="float:left;margin-left:10px; margin-right:20px;"> <div class="form-group">
+                                    <div class="container">
+                                        <div class="row">    
+                                            <div class="col-xs-12 col-md-6  col-sm-8">  
+                                                <!-- image-preview-filename input [CUT FROM HERE]-->
+                                                <div class="input-group image-preview">
+                                                    <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                                                    <span class="input-group-btn">
+                                                        <!-- image-preview-clear button -->
+                                                        <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                                            <span class="glyphicon glyphicon-remove"></span> Clear
+                                                        </button>
+                                                        <!-- image-preview-input -->
+                                                        <div class="btn btn-default image-preview-input">
+                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                            <span class="image-preview-input-title">Browse</span>
+                                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="uploadFile"/> <!-- rename it -->
+                                                        </div>
+                                                    </span>
+                                                </div><!-- /input-group image-preview [TO HERE]--> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                     </table>
+                       
+                    </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary" style="float:right; margin-right:50px;font-size:1.3em">등록하기</button>
+                      </div>
+                      </form>
+                  </div>
+                </div>
+            </div>
+     </section>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        
+        <script>
+            $(function(){
+
+            $(".dropdown-menu li a").click(function(){
+
+              $(".btn:first-child").text($(this).text());
+              $(".btn:first-child").val($(this).text());
+
+           });
+
+        });
+            
+            $(document).on('click', '#close-preview', function(){ 
+                $('.image-preview').popover('hide');
+                // Hover befor close the preview
+                $('.image-preview').hover(
+                    function () {
+                        $('.image-preview').popover('show');
+                    }, 
+                    function () {
+                        $('.image-preview').popover('hide');
+                    }
+                );    
+            });
+            
+            <!-- imagePreview -->
+            $(function() {
+                // Create the close button
+                var closebtn = $('<button/>', {
+                    type:"button",
+                    text: 'x',
+                    id: 'close-preview',
+                    style: 'font-size: initial;',
+                });
+                closebtn.attr("class","close pull-right");
+                // Set the popover default content
+                $('.image-preview').popover({
+                    trigger:'manual',
+                    html:true,
+                    title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+                    content: "There's no image",
+                    placement:'bottom'
+                });
+                // Clear event
+                $('.image-preview-clear').click(function(){
+                    $('.image-preview').attr("data-content","").popover('hide');
+                    $('.image-preview-filename').val("");
+                    $('.image-preview-clear').hide();
+                    $('.image-preview-input input:file').val("");
+                    $(".image-preview-input-title").text("Browse"); 
+                }); 
+                // Create the preview image
+                $(".image-preview-input input:file").change(function (){     
+                    var img = $('<img/>', {
+                        id: 'dynamic',
+                        width:250,
+                        height:200
+                    });      
+                    var file = this.files[0];
+                    var reader = new FileReader();
+                    // Set preview image into the popover data-content
+                    reader.onload = function (e) {
+                        $(".image-preview-input-title").text("Change");
+                        $(".image-preview-clear").show();
+                        $(".image-preview-filename").val(file.name);            
+                        img.attr('src', e.target.result);
+                        $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+                    }        
+                    reader.readAsDataURL(file);
+                });  
+            });
+        </script>
+    </body>
+</html>
